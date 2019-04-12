@@ -25,7 +25,8 @@ class Backend extends AbstractController
             // get the variables
             $username = $request->request->get('username', 'none');
             $password = $request->request->get('password', 'none');
-            $acctype = $request->request->get('acctype', 'none');
+			$email    = $request->request->get('email', 'none');
+            $acctype  = $request->request->get('acctype', 'none');
                         
             // put in the database            
              $entityManager = $this->getDoctrine()->getManager();
@@ -33,6 +34,7 @@ class Backend extends AbstractController
               $login = new Login();
               $login->setUsername($username);
               $login->setPassword($password);
+			  $login->setEmail($email);
               $login->setAcctype($acctype);
              
              $entityManager->persist($login);

@@ -1,20 +1,11 @@
-<!DOCTYPE html>
-<html>
+{% include 'header.html' %}
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Multi-page template</title>
-
-<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
-<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-
-</head>
+{% include 'footer.html' %}
 
 <body>
 
-<div data-role="page" id="one">
+<!-- Start of main page -->
+<div data-role="page" id="main">
 
 	<div data-role="header">
 		<h1>Ciara's Pizza Place</h1>
@@ -31,53 +22,11 @@
 
 	</div><!-- /content -->
 
-	<div data-role="footer" data-theme="a">
-		<h4>Page Footer</h4>
-	</div><!-- /footer -->
 	
 	
-</div><!-- /page one -->
+</div><!-- /main page -->
 
-<!-- Start of second page: #two -->
-<div data-role="page" id="two" data-theme="a">
-
-	<div data-role="header">
-		<h1>Two</h1>
-	</div><!-- /header -->
-
-	<div role="main" class="ui-content">
-		<h2>Two</h2>
-		<p>I have an id of "two" on my page container. I'm the second page container in this multi-page template.</p>
-		<p>Notice that the theme is different for this page because we've added a few <code>data-theme</code> swatch assigments here to show off how flexible it is. You can add any content or widget to these pages, but we're keeping these simple.</p>
-		<p><a href="#one" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-b">Back to page "one"</a></p>
-
-	</div><!-- /content -->
-
-	<div data-role="footer">
-		<h4>Page Footer</h4>
-	</div><!-- /footer -->
-</div><!-- /page two -->
-
-<!-- Start of third page: #popup -->
-<div data-role="page" id="popup">
-
-	<div data-role="header" data-theme="b">
-		<h1>Dialog</h1>
-	</div><!-- /header -->
-
-	<div role="main" class="ui-content">
-		<h2>Popup</h2>
-		<p>I have an id of "popup" on my page container and only look like a dialog because the link to me had a <code>data-rel="dialog"</code> attribute which gives me this inset look and a <code>data-transition="pop"</code> attribute to change the transition to pop. Without this, I'd be styled as a normal page.</p>
-		<p><a href="#one" data-rel="back" class="ui-btn ui-shadow ui-corner-all ui-btn-inline ui-icon-back ui-btn-icon-left">Back to page "one"</a></p>
-	</div><!-- /content -->
-
-	<div data-role="footer">
-		<h4>Page Footer</h4>
-	</div><!-- /footer -->
-</div><!-- /page popup -->
-
-
-
+<!-- Start of login page -->
 <div data-role="page" id="login" data-theme="a">
 	<div data-role="header">
 		<h1>Login page</h1>
@@ -85,21 +34,30 @@
 
     <div role="main" class="ui-content">
 		<h2>Login</h2>
+			<span id="loginNameError"></span><br>
 			Username <input type="text" name="login_username" id="login_username" value="">
+			<span id="loginPasswordError"></span><br>
 			Password <input type="password" name="login_pass" id="login_pass" value="">
 			<button class="ui-btn" id="loginButton">Submit</button>
 	</div><!-- /content -->
+	
 </div>
 
+
+<!-- Start of register page -->
 <div data-role="page" id="register" data-theme="a">
 	<div data-role="header">
 		<h1>Register</h1>
     </div><!-- /header -->
 
     <div role="main" class="ui-content">
-		<h2>Register</h2>    
+		<h2>Register</h2>   
+					
 			Username <input type="text" name="username" id="username" value="">
+			
 			Password <input type="password" name="pass" id="pass" value="" autocomplete="off">
+			
+			Email <input type="text" name="email" id="email" value="" autocomplete="off">
 			Account Type <select name="acctype" id="acctype">
         			<option value="Customer">Customer</option>
         			<option value="Driver">Driver</option>
@@ -107,8 +65,10 @@
     			 		</select>
 			<button class="ui-btn" id="registerButton">Submit</button>
 	</div><!-- /content -->
+
 </div>
 
+<!-- Start of driver page -->
 <div data-role="page" id="driver" data-theme="a">
     <div data-role="header">
 		<h1>Driver's Page</h1>
@@ -119,8 +79,11 @@
 
 
 	</div><!-- /content -->
+	
+	
 </div>
 
+<!-- Start of manager page -->
 <div data-role="page" id="manager" data-theme="a">
     <div data-role="header">
 		<h1>Manager's Page</h1>
@@ -131,11 +94,13 @@
 
 
 	</div><!-- /content -->
+	
+	
 </div>
 
 
 
-
+<!-- Start of customer page -->
 <div data-role="page" id="customer" data-theme="a">
     <div data-role="header">
 		<h1>Customer's Page</h1>
@@ -144,59 +109,225 @@
     <div role="main" class="ui-content">
 	<script>
 		// template for a product
-
 		class product {
 			constructor(name, price, qty) {
-				this.name = name
+				this.name = name;
 				this.price = price;
 				this.qty = qty;
 			}
 		}
 
 		// define our products
-		cookies = new product("cookies", 3.50, 0);
-
-		cola = new product("regular cola", 1.50, 0);
-
+		hawaiian = new product("hawaiian", 11.00, 0);
+		newyorker = new product("newyorker", 11.00, 0);
+		housespecial = new product("housespecial", 11.00, 0);
+		custom = new product("custom", 11.00, 0);
+		garlic = new product("garlic", 5.00, 0);
+		potato = new product("potato", 5.00, 0);
+		
+		var products = []; // array
+		products.push(hawaiian);
+		products.push(newyorker);
+		products.push(housespecial);
+		products.push(custom);
+		products.push(garlic);
+		products.push(potato);
 	</script>
 	
-	Add cookies.. <button id="addCookies">Add me</button>
-				  <button id="removeCookies">Delete</button>	
+	<h2>Pizza</h2>
+	<div role="content" class="ui-content">
+		<table data-role="table" id="pizza-table" data-mode="reflow" class="ui-responsive">
+			<thead>
+				<tr>
+					<th>Item</th>
+					<th>Price</th>
+					<th>Add/Delete</th>
+					<th>Total</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>			
+					<th>Hawaiian Pizza</th>    	
+					<th>€11.00</th>
+					<th><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct1" productname="hawaiian">Add</button>
+						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct1" productname="hawaiian">Delete</button></th>
+					<th><input type="text" id="hawaiianTotal" readonly/></th>
+				</tr>
+				<tr>			
+					<th>New Yorker Pizza</th>    	
+					<th>€11.00</th>
+					<th><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct2" productname="newyorker">Add</button>
+						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct2" productname="newyorker">Delete</button></th>
+					<th><input type="text" id="newyorkerTotal" readonly/></th>
+				</tr>
+				<tr>			
+					<th>House Special Pizza</th>    	
+					<th>€11.00</th>
+					<th><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct3" productname="housespecial">Add</button>
+						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct3" productname="housespecial">Delete</button></th>
+					<th><input type="text" id="housespecialTotal" readonly/></th>
+				</tr>
+				<tr>			
+					<th>Custom Pizza</th>    	
+					<th>€11.00</th>
+					<th><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct4" productname="custom">Add</button>
+						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct4" productname="custom">Delete</button></th>
+					<th><input type="text" id="customTotal" readonly/></th>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h2>Sides</h2>
+	<div role="content" class="ui-content">
+		<table data-role="table" id="sides-table" data-mode="reflow" class="ui-responsive">
+			<thead>
+				<tr>
+					<th>Item</th>
+					<th>Price</th>
+					<th>Add/Delete</th>
+					<th>Total</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>			
+					<th>Garlic Bread</th>    	
+					<th>€5.00</th>
+					<th><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct5" productname="garlic">Add</button>
+						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct5" productname="garlic">Delete</button></th>
+					<th><input type="text" id="garlicTotal" readonly/></th>
+				</tr>
+				<tr>			
+					<th>Potato Wedges</th>    	
+					<th>€5.00</th>
+					<th><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct6" productname="potato">Add</button>
+						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct6" productname="potato">Delete</button></th>
+					<th><input type="text" id="potatoTotal" readonly/></th>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 				  
-	<button id="viewCart">View Cart</button>
-	<div id="myCart"></div>  
+	<a href="#panelTotal" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-check ui-btn-icon-left ui-btn-a" data-transition="pop">Checkout</a>
 	
-	<script>
-		$( "#addCookies").click(function() {
-			alert("Cookies added");
-			cookies.qty = cookies.qty + 1;
-		});
-		
-		$( "#removeCookies" ).click(function() {
-			cookies.qty = cookies.qty - 1;
-		});
-		
-	$( "#viewCart" ).click(function() {
-		// little variable that holds the content we will print
-      
-		var content = '';
-      
-		if (cookies.qty >= 1) { // check to see if we should add it or not
-          content = content + "Cookies " + cookies.qty + "<br>" + "Price " + cookies.qty * cookies.price;
-		}
-		// display the content variable in the myCart div.
-		$( "#myCart" ).html(content);
-	});
-
-	</script>
-
-
+	<div data-role="panel" data-display="overlay" id="panelTotal" data-theme="a" class="ui-corner-all">
+				<form>
+					<div style="padding:10px 20px;">
+						<h3>Order Total</h3>
+						<input type="text" id="totalOrderPrice" readonly/>
+				    	<button onclick="checkout()" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-shop">Checkout</button>
+						<a href="#customer" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-back" data-rel="close">Keep Shopping</a>
+					</div>
+				</form>
+			</div>
 	</div><!-- /content -->
+	
 </div>
 </body>
 
 <script>
+			
+	$('[id^=addProduct]' ).click(function() {
 
+    var p = $(this).attr('productname'); // find out what was clicked
+    
+    var arrayLength = products.length;
+    for (var i = 0; i < arrayLength; i++) { // loop over the products
+        
+        var pro = products[i]; // get one product at a time
+		 console.log(pro.name);
+		
+        if(p == pro.name) { // check if the product we are looking for is the one we have.
+            
+            pro.qty = pro.qty + 1; // remove one from the qty
+			
+			console.log(pro.qty);
+            
+            $( "#"+pro.name+"Qty" ).val(pro.qty); // if we looking for cookies, pro.name+Qty becomes, cookiesQty
+
+			$( "#"+pro.name+"Total" ).val(pro.qty * pro.price);
+			
+			updateCart();
+			
+			}
+		}
+	});
+
+	$('[id^=removeProduct]').click(function(){
+
+	var p = $(this).attr('productname');
+	
+	var arrayLength = products.length;
+    for (var i = 0; i < arrayLength; i++) { // loop over the products
+        
+        var pro = products[i] // get one product at a time
+        console.log(pro.name);
+        
+        if(p == pro.name) { // check if the product we are looking for is the one we have.
+            
+            pro.qty = pro.qty - 1; // remove one from the qty
+			
+			console.log(pro.qty);
+            
+            $( "#"+pro.name+"Qty" ).val(pro.qty); // if we looking for cookies, pro.name+Qty becomes, cookiesQty
+
+			$( "#"+pro.name+"Price" ).val(pro.qty * pro.price);
+			
+			updateCart();
+			
+			}
+		}
+	});
+	
+</script>
+
+<script>
+
+	$( "#viewCart" ).click(function() {
+		updateCart();
+		});
+		
+    
+	function updateCart(){
+	
+		var totalOrderPrice = 0;
+		var arrayLength = products.length;
+		for (var i = 0; i < arrayLength; i++) { // loop over the products
+		
+			totalOrderPrice += products[i].qty * products[i].price;
+				
+	}		
+	$("#totalOrderPrice").val(totalOrderPrice);
+	}
+</script>
+
+<script>
+function checkout(){
+
+    var ser = '';
+
+     var arrayLength = products.length;
+     
+        for (var i = 0; i < arrayLength; i++) { // loop over the products
+            
+            var pro = products[i] // get one product at a time
+            console.log(pro.name);
+            console.log(pro.qty);
+            
+            ser = ser + pro.name + '-' + pro.qty + '=';
+            }
+
+// jQuery post and send the ser.
+
+    $.post( "/catchTheCart", { placedby: "Ciara", ser: ser })
+      .done(function( data ) {
+       alert( "Data Loaded: " + data );
+      });
+
+console.log(ser);
+}
+</script>
+
+<script>
 $( "#loginButton" ).click(function() {
   
       var un = $( "#login_username" ).val();
@@ -222,7 +353,6 @@ $( "#loginButton" ).click(function() {
 </script>
 
 <script>
-
 $( "#registerButton" ).click(function() {
   
       var un = $( "#username" ).val();
@@ -230,11 +360,14 @@ $( "#registerButton" ).click(function() {
       
       var pw = $( "#pass" ).val();
       console.log(pw);
+	  
+	  var em = $( "#email" ).val();
+      console.log(em);
       
       var at = $( "#acctype" ).val();
       console.log(acctype);
       
-      $.post( "/backend", { type: "register", username:un, password:pw, acctype:at})
+      $.post( "/backend", { type: "register", username:un, password:pw, email:em, acctype:at})
      .done(function( data ) {
         alert( "Data Loaded: " + data );
 		
@@ -249,7 +382,32 @@ $( "#registerButton" ).click(function() {
 		}
 		});  
 });
+</script>
 
+<script>
+function validateElements(){
+	
+	// check the login_username is not empty
+	if($("#login_username").val() == ""){
+	
+		$("#loginNameError").html("Please enter in a username");
+	}
+	else{
+		$("#loginNameError").html("");
+	}
+	
+	// check the login_password is not empty 
+	if($("#login_pass").val() == ""){
+	
+		$("#loginPasswordError").html("Please enter in a password");
+	}
+	else{
+		$("#loginPasswordError").html("");
+	}	
+}
+$( "#login").focusout(function(){
+	validateElements();
+});
 </script>
 
 </html>
