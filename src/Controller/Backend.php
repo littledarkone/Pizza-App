@@ -6,14 +6,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Login;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;   
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class Backend extends AbstractController
 {
+	private $session;
+	
+    public function __construct(SessionInterface $session) 
+	{
+        $this->session = $session;
+    }
     /**
      * @Route("/backend", name="catch") methods={"GET","POST"}
      */
-    public function index()
+    public function index(SessionInterface $session)
     {
         $request = Request::createFromGlobals(); // the envelope, and we're looking inside it.
 
@@ -29,23 +36,32 @@ class Backend extends AbstractController
             $acctype  = $request->request->get('acctype', 'none');
                         
             // put in the database            
-             $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->getDoctrine()->getManager();
 
-              $login = new Login();
-              $login->setUsername($username);
-              $login->setPassword($password);
-			  $login->setEmail($email);
-              $login->setAcctype($acctype);
+              $user = new Login();
+              $user->setUsername($username);
+              $user->setPassword($password);
+			  $user->setEmail($email);
+              $user->setAcctype($acctype);
+			  $user->setStatus("Active");
              
-             $entityManager->persist($login);
+			$entityManager->persist($user);
 
              // actually executes the queries (i.e. the INSERT query)
-             $entityManager->flush();             
+            $entityManager->flush();
+			
+			$repo = $this->getDoctrine()->getRepository(Login::class);
+            $findOne = $repo->findOneBy([
+                 'username' => $username,
+                 'password' => $password
+             ]);      
+             
+             $session->set('userid', $findOne->getID());
+             $session->set('username', $username);
                         
              return new Response(
-                    $login->getAcctype()
+                    $user->getAcctype()
                     );
-            
         }
         else if($type == 'login'){ // if we had a login
             
@@ -55,13 +71,13 @@ class Backend extends AbstractController
             
             $repo = $this->getDoctrine()->getRepository(Login::class); // the type of the entity
             
-            $person = $repo->findOneBy([
+            $findOne = $repo->findOneBy([
                 'username' => $username,
                 'password' => $password,
                 ]);
 
                 return new Response(
-                    $person->getAcctype()
+                    $findOne->getAcctype()
                     );                  
         }    
     }

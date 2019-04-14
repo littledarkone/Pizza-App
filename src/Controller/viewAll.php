@@ -18,22 +18,22 @@ class viewAll extends AbstractController
         
         $entityManager = $this->getDoctrine()->getManager();        
      
-
-
- 
-        $orders = $this->getDoctrine()->getRepository(Orders::class)->findAll();
+		$orders = $this->getDoctrine()->getRepository(Orders::class)->findAll();
        
+		$output = '<table> 
+						<thead>
+							<tr>
+								<th>Customer Name</th>
+								<th>Item</th>
+								<th>Quantity</th>
+							</tr>
+						</thead>';
        
-
-       
-       
-       $output = '<table>'; // html the user will see
-       
-       foreach($orders as $pro){
+		foreach($orders as $pro){
            
-           $output .= '<tr>'; // one row
+           $output .= '<tbody>
+							<tr>'; // one row
            $output .= '<td>' . $pro->getPlacedby() . '</td>'; // one column
-           
            
            // making the column
            $output .= '<td>'; //next column
@@ -68,7 +68,7 @@ class viewAll extends AbstractController
       $output .= '</table>';
 
           return new Response(
-            'all ok' . $output
+            $output
         );
         
     }

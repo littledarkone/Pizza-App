@@ -4,9 +4,8 @@
 
 <body>
 
-<!-- Start of main page -->
+<!-- MAIN PAGE -->
 <div data-role="page" id="main">
-
 	<div data-role="header">
 		<h1>Ciara's Pizza Place</h1>
 	</div><!-- /header -->
@@ -24,9 +23,10 @@
 
 	
 	
-</div><!-- /main page -->
+</div>
+<!-- END MAIN PAGE -->
 
-<!-- Start of login page -->
+<!-- START OF LOGIN PAGE-->
 <div data-role="page" id="login" data-theme="a">
 	<div data-role="header">
 		<h1>Login page</h1>
@@ -39,12 +39,12 @@
 			<span id="loginPasswordError"></span><br>
 			Password <input type="password" name="login_pass" id="login_pass" value="">
 			<button class="ui-btn" id="loginButton">Submit</button>
-	</div><!-- /content -->
-	
+	</div><!-- /content -->	
 </div>
+<!-- END OF LOGIN PAGE -->
 
 
-<!-- Start of register page -->
+<!-- START OF REGISTER PAGE -->
 <div data-role="page" id="register" data-theme="a">
 	<div data-role="header">
 		<h1>Register</h1>
@@ -58,6 +58,7 @@
 			Password <input type="password" name="pass" id="pass" value="" autocomplete="off">
 			
 			Email <input type="text" name="email" id="email" value="" autocomplete="off">
+			
 			Account Type <select name="acctype" id="acctype">
         			<option value="Customer">Customer</option>
         			<option value="Driver">Driver</option>
@@ -65,25 +66,23 @@
     			 		</select>
 			<button class="ui-btn" id="registerButton">Submit</button>
 	</div><!-- /content -->
-
 </div>
+<!-- END OF REGISTER PAGE -->
 
-<!-- Start of driver page -->
+<!-- START OF DRIVER PAGE -->
 <div data-role="page" id="driver" data-theme="a">
     <div data-role="header">
 		<h1>Driver's Page</h1>
 	</div><!-- /header -->
 
-    <div role="main" class="ui-content">
-	
-
+	<div role="main" class="ui-content">
 
 	</div><!-- /content -->
-	
-	
 </div>
+<!-- END OF DRIVER PAGE -->
 
-<!-- Start of manager page -->
+
+<!-- START OF MANAGER PAGE -->
 <div data-role="page" id="manager" data-theme="a">
     <div data-role="header">
 		<h1>Manager's Page</h1>
@@ -91,19 +90,18 @@
 
     <div role="main" class="ui-content">
 	
-
+	<a href="#viewAll" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-check ui-btn-icon-left ui-btn-a" data-transition="pop">View all orders</a>
 
 	</div><!-- /content -->
-	
-	
 </div>
+<!-- END OF MANAGER PAGE -->
 
 
-
-<!-- Start of customer page -->
+<!-- START OF CUSTOMER PAGE -->
 <div data-role="page" id="customer" data-theme="a">
     <div data-role="header">
 		<h1>Customer's Page</h1>
+		{#<a href="{{ path('orders') }}" class="ui-btn ui-shadow ui-corner-all">Your Order History</a>#}
 	</div><!-- /header -->
 
     <div role="main" class="ui-content">
@@ -124,6 +122,9 @@
 		custom = new product("custom", 11.00, 0);
 		garlic = new product("garlic", 5.00, 0);
 		potato = new product("potato", 5.00, 0);
+		coke = new product ("coke", 1.00, 0);
+		fanta = new product ("fanta", 1.00, 0);
+		sprite = new product ("sprite", 1.00, 0);
 		
 		var products = []; // array
 		products.push(hawaiian);
@@ -132,9 +133,14 @@
 		products.push(custom);
 		products.push(garlic);
 		products.push(potato);
+		products.push(coke);
+		products.push(fanta);
+		products.push(sprite);
+		
 	</script>
-	
+	<div data-role="header">
 	<h2>Pizza</h2>
+	</div>
 	<div role="content" class="ui-content">
 		<table data-role="table" id="pizza-table" data-mode="reflow" class="ui-responsive">
 			<thead>
@@ -147,37 +153,39 @@
 			</thead>
 			<tbody>
 				<tr>			
-					<th>Hawaiian Pizza</th>    	
-					<th>€11.00</th>
-					<th><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct1" productname="hawaiian">Add</button>
-						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct1" productname="hawaiian">Delete</button></th>
-					<th><input type="text" id="hawaiianTotal" readonly/></th>
+					<td>Hawaiian Pizza</td>    	
+					<td>€11.00</td>
+					<td><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct1" productname="hawaiian">Add</button>
+						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct1" productname="hawaiian">Delete</button></td>
+					<td><input type="text" id="hawaiianTotal" readonly/></td>
 				</tr>
 				<tr>			
-					<th>New Yorker Pizza</th>    	
-					<th>€11.00</th>
-					<th><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct2" productname="newyorker">Add</button>
-						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct2" productname="newyorker">Delete</button></th>
-					<th><input type="text" id="newyorkerTotal" readonly/></th>
+					<td>New Yorker Pizza</td>    	
+					<td>€11.00</td>
+					<td><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct2" productname="newyorker">Add</button>
+						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct2" productname="newyorker">Delete</button></td>
+					<td><input type="text" id="newyorkerTotal" readonly/></td>
 				</tr>
 				<tr>			
-					<th>House Special Pizza</th>    	
-					<th>€11.00</th>
-					<th><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct3" productname="housespecial">Add</button>
-						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct3" productname="housespecial">Delete</button></th>
-					<th><input type="text" id="housespecialTotal" readonly/></th>
+					<td>House Special Pizza</td>    	
+					<td>€11.00</td>
+					<td><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct3" productname="housespecial">Add</button>
+						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct3" productname="housespecial">Delete</button></td>
+					<td><input type="text" id="housespecialTotal" readonly/></td>
 				</tr>
 				<tr>			
-					<th>Custom Pizza</th>    	
-					<th>€11.00</th>
-					<th><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct4" productname="custom">Add</button>
-						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct4" productname="custom">Delete</button></th>
-					<th><input type="text" id="customTotal" readonly/></th>
+					<td>Custom Pizza</td>    	
+					<td>€11.00</td>
+					<td><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct4" productname="custom">Add</button>
+						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct4" productname="custom">Delete</button></td>
+					<td><input type="text" id="customTotal" readonly/></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
+	<div data-role="header">
 	<h2>Sides</h2>
+	</div>
 	<div role="content" class="ui-content">
 		<table data-role="table" id="sides-table" data-mode="reflow" class="ui-responsive">
 			<thead>
@@ -190,18 +198,56 @@
 			</thead>
 			<tbody>
 				<tr>			
-					<th>Garlic Bread</th>    	
-					<th>€5.00</th>
-					<th><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct5" productname="garlic">Add</button>
-						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct5" productname="garlic">Delete</button></th>
-					<th><input type="text" id="garlicTotal" readonly/></th>
+					<td>Garlic Bread</td>
+					<td>€5.00</td>
+					<td><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct5" productname="garlic">Add</button>
+						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct5" productname="garlic">Delete</button></td>
+					<td><input type="text" id="garlicTotal" readonly/></td>
 				</tr>
 				<tr>			
-					<th>Potato Wedges</th>    	
-					<th>€5.00</th>
-					<th><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct6" productname="potato">Add</button>
+					<td>Potato Wedges</th>    	
+					<td>€5.00</th>
+					<td><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct6" productname="potato">Add</button>
 						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct6" productname="potato">Delete</button></th>
-					<th><input type="text" id="potatoTotal" readonly/></th>
+					<td><input type="text" id="potatoTotal" readonly/></th>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div data-role="header">
+	<h2>Drinks</h2>
+	</div>
+	<div role="content" class="ui-content">
+		<table data-role="table" id="drinks-table" data-mode="reflow" class="ui-responsive">
+			<thead>
+				<tr>
+					<th>Item</th>
+					<th>Price</th>
+					<th>Add/Delete</th>
+					<th>Total</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>			
+					<td>Coca-Cola</td>    	
+					<td>€1.00</td>
+					<td><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct7" productname="coke">Add</button>
+						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct7" productname="coke">Delete</button></td>
+					<td><input type="text" id="cokeTotal" readonly/></td>
+				</tr>
+				<tr>			
+					<td>Fanta</td>    	
+					<td>€1.00</td>
+					<td><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct8" productname="fanta">Add</button>
+						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct8" productname="fanta">Delete</button></td>
+					<td><input type="text" id="fantaTotal" readonly/></td>
+				</tr>
+				<tr>			
+					<td>Sprite</td>    	
+					<td>€1.00</td>
+					<td><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct9" productname="sprite">Add</button>
+						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct9" productname="sprite">Delete</button></td>
+					<td><input type="text" id="spriteTotal" readonly/></td>
 				</tr>
 			</tbody>
 		</table>
@@ -210,22 +256,22 @@
 	<a href="#panelTotal" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-check ui-btn-icon-left ui-btn-a" data-transition="pop">Checkout</a>
 	
 	<div data-role="panel" data-display="overlay" id="panelTotal" data-theme="a" class="ui-corner-all">
-				<form>
+				
 					<div style="padding:10px 20px;">
 						<h3>Order Total</h3>
 						<input type="text" id="totalOrderPrice" readonly/>
-				    	<button onclick="checkout()" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-shop">Checkout</button>
+				    	<button data-ajax="false" onclick="checkout()" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-shop">Checkout</button>
 						<a href="#customer" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-back" data-rel="close">Keep Shopping</a>
 					</div>
-				</form>
+		
 			</div>
 	</div><!-- /content -->
-	
 </div>
+<!-- END OF CUSTOMER PAGE -->
 </body>
+<!-- END OF BODY -->
 
-<script>
-			
+<script>		
 	$('[id^=addProduct]' ).click(function() {
 
     var p = $(this).attr('productname'); // find out what was clicked
@@ -234,7 +280,7 @@
     for (var i = 0; i < arrayLength; i++) { // loop over the products
         
         var pro = products[i]; // get one product at a time
-		 console.log(pro.name);
+		console.log(pro.name);
 		
         if(p == pro.name) { // check if the product we are looking for is the one we have.
             
@@ -262,25 +308,21 @@
         var pro = products[i] // get one product at a time
         console.log(pro.name);
         
-        if(p == pro.name) { // check if the product we are looking for is the one we have.
-            
-            pro.qty = pro.qty - 1; // remove one from the qty
+        if(p == pro.name) {		// check if the product we are looking for is the one we have.
+       
+				pro.qty = pro.qty - 1; // remove one from the qty
 			
-			console.log(pro.qty);
+				console.log(pro.qty);
             
-            $( "#"+pro.name+"Qty" ).val(pro.qty); // if we looking for cookies, pro.name+Qty becomes, cookiesQty
+				$( "#"+pro.name+"Qty" ).val(pro.qty); // if we looking for cookies, pro.name+Qty becomes, cookiesQty
 
-			$( "#"+pro.name+"Price" ).val(pro.qty * pro.price);
+				$( "#"+pro.name+"Total" ).val(pro.qty * pro.price);
 			
-			updateCart();
+				updateCart();
 			
 			}
 		}
 	});
-	
-</script>
-
-<script>
 
 	$( "#viewCart" ).click(function() {
 		updateCart();
@@ -298,9 +340,7 @@
 	}		
 	$("#totalOrderPrice").val(totalOrderPrice);
 	}
-</script>
 
-<script>
 function checkout(){
 
     var ser = '';
@@ -321,13 +361,12 @@ function checkout(){
     $.post( "/catchTheCart", { placedby: "Ciara", ser: ser })
       .done(function( data ) {
        alert( "Data Loaded: " + data );
+	    window.location="/viewAll";
       });
 
 console.log(ser);
 }
-</script>
 
-<script>
 $( "#loginButton" ).click(function() {
   
       var un = $( "#login_username" ).val();
@@ -336,23 +375,26 @@ $( "#loginButton" ).click(function() {
       var pw = $( "#login_pass" ).val();
       console.log(pw);
            
-      $.post( "/backend", { type: "login", username:un, password:pw})
-     .done(function( data ) {
-           
-        if(data == 'Customer'){
-            window.location="/index#customer";
-        }
-        else if(data == 'Driver'){
-            window.location="/index#driver";
-        }
-		else if(data == 'Manager'){
-            window.location="/index#manager";
+		var allOk = validateElements();
+		   if(allOk == true){
+				  $.post( "/backend", { type: "login", username:un, password:pw})
+				 .done(function( data ) {
+					   
+					if(data == 'Customer'){
+						window.location="/index#customer";
+					}
+					else if(data == 'Driver'){
+						window.location="/index#driver";
+					}
+					else if(data == 'Manager'){
+						window.location="/index#manager";
+					}
+					});
+		
+		
 		}
-		});
 });
-</script>
 
-<script>
 $( "#registerButton" ).click(function() {
   
       var un = $( "#username" ).val();
@@ -382,10 +424,11 @@ $( "#registerButton" ).click(function() {
 		}
 		});  
 });
-</script>
 
-<script>
 function validateElements(){
+	
+	
+	var allOk = false;
 	
 	// check the login_username is not empty
 	if($("#login_username").val() == ""){
@@ -394,20 +437,29 @@ function validateElements(){
 	}
 	else{
 		$("#loginNameError").html("");
+		allOk = true;
 	}
 	
 	// check the login_password is not empty 
 	if($("#login_pass").val() == ""){
 	
 		$("#loginPasswordError").html("Please enter in a password");
+		allOk = false;
 	}
 	else{
 		$("#loginPasswordError").html("");
+		
+		allOk = true;
 	}	
+	
+	
+	return allOk;
+	
+	
 }
-$( "#login").focusout(function(){
-	validateElements();
-});
+//$( "#login").focusout(function(){
+//	validateElements();
+//});
 </script>
 
 </html>
