@@ -38,14 +38,14 @@ class Backend extends AbstractController
             // put in the database            
             $entityManager = $this->getDoctrine()->getManager();
 
-              $user = new Login();
-              $user->setUsername($username);
-              $user->setPassword($password);
-			  $user->setEmail($email);
-              $user->setAcctype($acctype);
-			  $user->setStatus("Active");
+              $registerUser = new Login();
+              $registerUser->setUsername($username);
+              $registerUser->setPassword($password);
+			  $registerUser->setEmail($email);
+              $registerUser->setAcctype($acctype);
+			  $registerUser->setStatus("Active");
              
-			$entityManager->persist($user);
+			$entityManager->persist($registerUser);
 
              // actually executes the queries (i.e. the INSERT query)
             $entityManager->flush();
@@ -60,7 +60,7 @@ class Backend extends AbstractController
              $session->set('username', $username);
                         
              return new Response(
-                    $user->getAcctype()
+                    $registerUser->getAcctype()
                     );
         }
         else if($type == 'login'){ // if we had a login
@@ -75,11 +75,22 @@ class Backend extends AbstractController
                 'username' => $username,
                 'password' => $password,
                 ]);
+				
+				$session->set('username', $username);
+				$session->set('userid', $findOne->getID());
 
                 return new Response(
                     $findOne->getAcctype()
                     );                  
-        }    
+        }  
+		else if($type == 'getusername'){
+            // send back a response, with the username we stored in the session.
+            return new Response($session->get('username'));
+		}
+		else if($type == 'getuserid'){
+            // send back a response, with the username we stored in the session.
+            return new Response($session->get('userid'));
+		}
     }
     
     

@@ -23,8 +23,7 @@
 
 	
 	
-</div>
-<!-- END MAIN PAGE -->
+</div><!-- END MAIN PAGE -->
 
 <!-- START OF LOGIN PAGE-->
 <div data-role="page" id="login" data-theme="a">
@@ -35,13 +34,12 @@
     <div role="main" class="ui-content">
 		<h2>Login</h2>
 			<span id="loginNameError"></span><br>
-			Username <input type="text" name="login_username" id="login_username" value="">
+			Username <input type="text" name="login_username" id="login_username" value="" autofocus>
 			<span id="loginPasswordError"></span><br>
 			Password <input type="password" name="login_pass" id="login_pass" value="">
 			<button class="ui-btn" id="loginButton">Submit</button>
 	</div><!-- /content -->	
-</div>
-<!-- END OF LOGIN PAGE -->
+</div><!-- END OF LOGIN PAGE -->
 
 
 <!-- START OF REGISTER PAGE -->
@@ -66,8 +64,7 @@
     			 		</select>
 			<button class="ui-btn" id="registerButton">Submit</button>
 	</div><!-- /content -->
-</div>
-<!-- END OF REGISTER PAGE -->
+</div><!-- END OF REGISTER PAGE -->
 
 <!-- START OF DRIVER PAGE -->
 <div data-role="page" id="driver" data-theme="a">
@@ -76,10 +73,16 @@
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content">
+		<h2>Current Orders</h2>
+			<button id="viewOrders">View orders for deliver!</button>
+	
+			<div id="orders"></div>
 
+			<div id="weatherResponse"></div>
+			
+			<button onclick="logout()">Logout</button>
 	</div><!-- /content -->
-</div>
-<!-- END OF DRIVER PAGE -->
+</div><!-- END OF DRIVER PAGE -->
 
 
 <!-- START OF MANAGER PAGE -->
@@ -89,19 +92,20 @@
 	</div><!-- /header -->
 
     <div role="main" class="ui-content">
-	
-	<a href="#viewAll" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-check ui-btn-icon-left ui-btn-a" data-transition="pop">View all orders</a>
 
+	<button id="viewOrder">View all orders!</button>
+	
+	<div id="order"></div>
+	
+	
 	</div><!-- /content -->
-</div>
-<!-- END OF MANAGER PAGE -->
+</div><!-- END OF MANAGER PAGE -->
 
 
 <!-- START OF CUSTOMER PAGE -->
 <div data-role="page" id="customer" data-theme="a">
     <div data-role="header">
 		<h1>Customer's Page</h1>
-		{#<a href="{{ path('orders') }}" class="ui-btn ui-shadow ui-corner-all">Your Order History</a>#}
 	</div><!-- /header -->
 
     <div role="main" class="ui-content">
@@ -138,140 +142,156 @@
 		products.push(sprite);
 		
 	</script>
+	<div id="orderOptions">
 	<div data-role="header">
-	<h2>Pizza</h2>
+		<h2>Pizza</h2>
 	</div>
-	<div role="content" class="ui-content">
-		<table data-role="table" id="pizza-table" data-mode="reflow" class="ui-responsive">
-			<thead>
-				<tr>
-					<th>Item</th>
-					<th>Price</th>
-					<th>Add/Delete</th>
-					<th>Total</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>			
-					<td>Hawaiian Pizza</td>    	
-					<td>€11.00</td>
-					<td><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct1" productname="hawaiian">Add</button>
-						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct1" productname="hawaiian">Delete</button></td>
-					<td><input type="text" id="hawaiianTotal" readonly/></td>
-				</tr>
-				<tr>			
-					<td>New Yorker Pizza</td>    	
-					<td>€11.00</td>
-					<td><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct2" productname="newyorker">Add</button>
-						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct2" productname="newyorker">Delete</button></td>
-					<td><input type="text" id="newyorkerTotal" readonly/></td>
-				</tr>
-				<tr>			
-					<td>House Special Pizza</td>    	
-					<td>€11.00</td>
-					<td><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct3" productname="housespecial">Add</button>
-						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct3" productname="housespecial">Delete</button></td>
-					<td><input type="text" id="housespecialTotal" readonly/></td>
-				</tr>
-				<tr>			
-					<td>Custom Pizza</td>    	
-					<td>€11.00</td>
-					<td><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct4" productname="custom">Add</button>
-						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct4" productname="custom">Delete</button></td>
-					<td><input type="text" id="customTotal" readonly/></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+		<div>
+			<table data-role="table" id="pizza-table" data-mode="reflow" class="ui-responsive">
+				<thead>
+					<tr>
+						<th>Item</th>
+						<th>Price</th>
+						<th>Add/Delete</th>
+						<th>Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>			
+						<td>Hawaiian Pizza</td>    	
+						<td>€11.00</td>
+						<td><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct1" productname="hawaiian">Add</button>
+							<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct1" productname="hawaiian">Delete</button></td>
+						<td><input type="text" id="hawaiianTotal" readonly/></td>
+					</tr>
+					<tr>			
+						<td>New Yorker Pizza</td>    	
+						<td>€11.00</td>
+						<td><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct2" productname="newyorker">Add</button>
+							<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct2" productname="newyorker">Delete</button></td>
+						<td><input type="text" id="newyorkerTotal" readonly/></td>
+					</tr>
+					<tr>			
+						<td>House Special Pizza</td>    	
+						<td>€11.00</td>
+						<td><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct3" productname="housespecial">Add</button>
+							<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct3" productname="housespecial">Delete</button></td>
+						<td><input type="text" id="housespecialTotal" readonly/></td>
+					</tr>
+					<tr>			
+						<td>Custom Pizza</td>    	
+						<td>€11.00</td>
+						<td><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct4" productname="custom">Add</button>
+							<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct4" productname="custom">Delete</button></td>
+						<td><input type="text" id="customTotal" readonly/></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	<div data-role="header">
-	<h2>Sides</h2>
+		<h2>Sides</h2>
 	</div>
-	<div role="content" class="ui-content">
-		<table data-role="table" id="sides-table" data-mode="reflow" class="ui-responsive">
-			<thead>
-				<tr>
-					<th>Item</th>
-					<th>Price</th>
-					<th>Add/Delete</th>
-					<th>Total</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>			
-					<td>Garlic Bread</td>
-					<td>€5.00</td>
-					<td><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct5" productname="garlic">Add</button>
-						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct5" productname="garlic">Delete</button></td>
-					<td><input type="text" id="garlicTotal" readonly/></td>
-				</tr>
-				<tr>			
-					<td>Potato Wedges</th>    	
-					<td>€5.00</th>
-					<td><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct6" productname="potato">Add</button>
-						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct6" productname="potato">Delete</button></th>
-					<td><input type="text" id="potatoTotal" readonly/></th>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+		<div>
+			<table data-role="table" id="sides-table" data-mode="reflow" class="ui-responsive">
+				<thead>
+					<tr>
+						<th>Item</th>
+						<th>Price</th>
+						<th>Add/Delete</th>
+						<th>Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>			
+						<td>Garlic Bread</td>
+						<td>€5.00</td>
+						<td><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct5" productname="garlic">Add</button>
+							<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct5" productname="garlic">Delete</button></td>
+						<td><input type="text" id="garlicTotal" readonly/></td>
+					</tr>
+					<tr>			
+						<td>Potato Wedges</th>    	
+						<td>€5.00</th>
+						<td><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct6" productname="potato">Add</button>
+							<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct6" productname="potato">Delete</button></th>
+						<td><input type="text" id="potatoTotal" readonly/></th>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	<div data-role="header">
 	<h2>Drinks</h2>
 	</div>
-	<div role="content" class="ui-content">
-		<table data-role="table" id="drinks-table" data-mode="reflow" class="ui-responsive">
-			<thead>
-				<tr>
-					<th>Item</th>
-					<th>Price</th>
-					<th>Add/Delete</th>
-					<th>Total</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>			
-					<td>Coca-Cola</td>    	
-					<td>€1.00</td>
-					<td><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct7" productname="coke">Add</button>
-						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct7" productname="coke">Delete</button></td>
-					<td><input type="text" id="cokeTotal" readonly/></td>
-				</tr>
-				<tr>			
-					<td>Fanta</td>    	
-					<td>€1.00</td>
-					<td><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct8" productname="fanta">Add</button>
-						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct8" productname="fanta">Delete</button></td>
-					<td><input type="text" id="fantaTotal" readonly/></td>
-				</tr>
-				<tr>			
-					<td>Sprite</td>    	
-					<td>€1.00</td>
-					<td><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct9" productname="sprite">Add</button>
-						<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct9" productname="sprite">Delete</button></td>
-					<td><input type="text" id="spriteTotal" readonly/></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-				  
-	<a href="#panelTotal" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-check ui-btn-icon-left ui-btn-a" data-transition="pop">Checkout</a>
-	
-	<div data-role="panel" data-display="overlay" id="panelTotal" data-theme="a" class="ui-corner-all">
-				
-					<div style="padding:10px 20px;">
-						<h3>Order Total</h3>
-						<input type="text" id="totalOrderPrice" readonly/>
-				    	<button data-ajax="false" onclick="checkout()" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-shop">Checkout</button>
-						<a href="#customer" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-back" data-rel="close">Keep Shopping</a>
-					</div>
+		<div>
+			<table data-role="table" id="drinks-table" data-mode="reflow" class="ui-responsive">
+				<thead>
+					<tr>
+						<th>Item</th>
+						<th>Price</th>
+						<th>Add/Delete</th>
+						<th>Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>			
+						<td>Coca-Cola</td>    	
+						<td>€1.00</td>
+						<td><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct7" productname="coke">Add</button>
+							<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct7" productname="coke">Delete</button></td>
+						<td><input type="text" id="cokeTotal" readonly/></td>
+					</tr>
+					<tr>			
+						<td>Fanta</td>    	
+						<td>€1.00</td>
+						<td><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct8" productname="fanta">Add</button>
+							<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct8" productname="fanta">Delete</button></td>
+						<td><input type="text" id="fantaTotal" readonly/></td>
+					</tr>
+					<tr>			
+						<td>Sprite</td>    	
+						<td>€1.00</td>
+						<td><button data-icon="plus" data-iconpos="left" data-inline="true" id="addProduct9" productname="sprite">Add</button>
+							<button data-icon="minus" data-iconpos="left" data-inline="true" id="removeProduct9" productname="sprite">Delete</button></td>
+						<td><input type="text" id="spriteTotal" readonly/></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 		
-			</div>
-	</div><!-- /content -->
+		<br><label for="textarea-1" style="strong"><b>Customer comments: </b></label><textarea name="comments" id="comments"></textarea>
+	</div>
+	
+	<div id="showOrder">
+		<h2> Your order details:</h2><br>
+			<div id="orderDetails"></div>
+			<br><label for="textarea-1" style="strong"><b>Customer Address: </b></label><textarea name="address" id="address"></textarea>
+			<input type="text" id="totalOrderPrice" size="15" readonly/>
+	</div>
+	
+	<button href="#showOrder" data-ajax="false" id="placeOrder" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-shop">Review Order</button>
+	
+    <button id="goBack">Go back to order </button>
+    
+    <button id="completeOrder" onclick="checkout()">Complete order </button>
+	
+</div><!-- END OF CUSTOMER PAGE -->
+
+<div id="thanks">
+	<p>Thanks for your order!  It's currently being prepared and will be with you shortly.</p>
+	<br>
+	<button id="placeAnother">Place another order?</button>
+	<button onclick="logout()">Logout</button>
 </div>
-<!-- END OF CUSTOMER PAGE -->
 </body>
 <!-- END OF BODY -->
 
-<script>		
+<script>
+	$("#goBack").hide();
+	$("#showOrder").hide();
+	$("#completeOrder").hide();
+	$("#thanks").hide();
+	
+	//adding products and calculating total of each product - working
 	$('[id^=addProduct]' ).click(function() {
 
     var p = $(this).attr('productname'); // find out what was clicked
@@ -298,6 +318,7 @@
 		}
 	});
 
+	// deleting products and calculating total of each product - working
 	$('[id^=removeProduct]').click(function(){
 
 	var p = $(this).attr('productname');
@@ -323,12 +344,8 @@
 			}
 		}
 	});
-
-	$( "#viewCart" ).click(function() {
-		updateCart();
-		});
 		
-    
+    //updating cart with total of all products - working
 	function updateCart(){
 	
 		var totalOrderPrice = 0;
@@ -338,35 +355,167 @@
 			totalOrderPrice += products[i].qty * products[i].price;
 				
 	}		
-	$("#totalOrderPrice").val(totalOrderPrice);
+	$("#totalOrderPrice").val("Total order price: €" + totalOrderPrice);
 	}
+	
+	// placing the order - 
+	$( "#placeOrder" ).click(function() {
 
-function checkout(){
+		$("#orderOptions").hide(); // hide the order options
+		
+		$("#showOrder").show();
+		
+		$("#goBack").show();
+		
+		$("#completeOrder").show();
+		
+		$("#placeOrder").hide();		
+		
 
-    var ser = '';
+			var content = '';// build up the content
+ 
+			content = content + '<b>Products: </b><br>';
+    
+			<!-- var pizza = $("input[name=pizza]").each(function() { -->
+				<!-- if(this.checked == true) { // filter only the ones that we selected. -->
+					<!-- content = content + this.value + ":" + this.checked + '<br>'; -->
+				<!-- } -->
+			<!-- }); -->
+    
+			var comments = $("#comments").val(); // get the comments
+    
+				content = content + '<b>Additional order comments: </b></br>';
+				content = content + comments + '<br>';
+    
+				var username = '';
+    
+    
+				$.post( "/backend", { type: "getusername"} )
+					.done(function( data ) {
+        
+					username = data; // whatever data comes back, store it in the username variable
+        
+					content = content + "<p>Thank you " + username + ".<br>Please enter your address for delivery.";
+    
+					// the updating of the div, is INSIDE the .done function above, as we need to wait to get it back!
+					$("#orderDetails").html(content); 
+        
+					});
+    });
+	
+	
+	$("#goBack").click(function(){
+	
+		$("#orderOptions").show();
+	 
+		$("#goBack").hide();
+    
+		$("#orderDetails").html(""); // wipe the older order display
 
-     var arrayLength = products.length;
+	});
+		
+	// checkout function - working
+	function checkout(){
+
+		var placedby = '';
+		
+		var placedbyId = 0;
+		
+		var ser = '';
+		
+		var address = $("#address").val();
+		
+		var today = new Date();
+			var dd = today.getDate();
+			var mm = today.getMonth()+1; //January is 0!
+			var yyyy = today.getFullYear();
+			
+			var orderdate = (dd + '-' + (String(mm).padStart(2,0)) + '-' + yyyy);
+			
+		var price = 0;
+		
+		var arrayLength = products.length;
+		
+		$.post( "/backend", { type: "getusername"} )
+			.done(function( data ) {
+				placedby = data; // whatever data comes back, store it in the username variable
+		
+		$.post( "/backend", { type: "getuserid"} )
+			.done(function( data ) {
+				placedbyId = data;
      
-        for (var i = 0; i < arrayLength; i++) { // loop over the products
+			for (var i = 0; i < arrayLength; i++) { // loop over the products
             
-            var pro = products[i] // get one product at a time
-            console.log(pro.name);
-            console.log(pro.qty);
+				var pro = products[i] // get one product at a time
+				console.log(pro.name);
+				console.log(pro.qty);
             
-            ser = ser + pro.name + '-' + pro.qty + '=';
+				ser = ser + pro.name + '-' + pro.qty + '=';
             }
 
-// jQuery post and send the ser.
+			for (var i = 0; i < arrayLength; i++) { // loop over the products
+		
+				price += products[i].qty * products[i].price;
+			}
+			console.log(placedbyId);
+		
+			// jQuery post and send the ser.
+			$.post( "/catchTheCart", { placedby: placedby, placedbyId: placedbyId, ser: ser, address: address, orderdate: orderdate, status: "pending", price: price})
+				.done(function( data ) {
+				<!-- alert( "Data Loaded: " + data ); -->
+			});
+			});
+		});
+		
+		console.log(placedbyId);
+		
+		$("#orderOptions").hide();
+		$("#showOrder").hide();
+		$("#goBack").hide();
+		$("#completeOrder").hide();
+		$("#thanks").show();
+	}
 
-    $.post( "/catchTheCart", { placedby: "Ciara", ser: ser })
-      .done(function( data ) {
-       alert( "Data Loaded: " + data );
-	    window.location="/viewAll";
-      });
+// call to view all pending orders - working
+$( "#viewOrders" ).click(function(){
 
-console.log(ser);
-}
+		var pend = "";
+		
+		$.post( "/viewAll", {type: "viewDriver", pend: "pending"})
+		
+			.done(function( data ) {
+			
+			$("#viewOrders").hide();
+			
+			orders = data;
+			
+			$("#orders").html(orders)
+		});
+	});
+	
+// call to view all orders - working
+$( "#viewOrder" ).click(function(){
+		
+		$.post( "/viewAll", {type: "viewAll"})
+		
+			.done(function( data ) {
+			
+			$("#viewOrder").hide();
+			
+			orders = data;
+			
+			$("#order").html(orders)
+		});
+	});
+	
 
+// go back to orderpage
+$( "#placeAnother" ).click(function() {
+	$("#orderOptions").show();
+	});
+	
+		
+// logging in - working
 $( "#loginButton" ).click(function() {
   
       var un = $( "#login_username" ).val();
@@ -379,6 +528,7 @@ $( "#loginButton" ).click(function() {
 		   if(allOk == true){
 				  $.post( "/backend", { type: "login", username:un, password:pw})
 				 .done(function( data ) {
+					<!-- alert( "Data Loaded: " + data ); -->
 					   
 					if(data == 'Customer'){
 						window.location="/index#customer";
@@ -395,6 +545,7 @@ $( "#loginButton" ).click(function() {
 		}
 });
 
+// registering - working
 $( "#registerButton" ).click(function() {
   
       var un = $( "#username" ).val();
@@ -411,7 +562,7 @@ $( "#registerButton" ).click(function() {
       
       $.post( "/backend", { type: "register", username:un, password:pw, email:em, acctype:at})
      .done(function( data ) {
-        alert( "Data Loaded: " + data );
+        <!-- alert( "Data Loaded: " + data ); -->
 		
 		if(data == 'Customer'){
             window.location="/index#customer";
@@ -425,6 +576,7 @@ $( "#registerButton" ).click(function() {
 		});  
 });
 
+// validating username and password - working
 function validateElements(){
 	
 	
@@ -450,16 +602,40 @@ function validateElements(){
 		$("#loginPasswordError").html("");
 		
 		allOk = true;
-	}	
-	
+	}
 	
 	return allOk;
 	
+}
+
+// logout - working
+function logout() {
+    var r = confirm("Do you really want to log out?");
+    if (r) {
+       window.location="/index"
+    }
+}
+
+
+// api for weather for driver - working
+
+var apiCall = 'http://api.openweathermap.org/data/2.5/weather?q=Dublin&units=metric&appid=ca92abf8765513423d12cfc3edd9116d';
+
+$.getJSON(apiCall, weatherCallback);
+
+function weatherCallback(weatherData){
+	console.log(weatherData);
+
+	var cityName = weatherData.name;
+	var country = weatherData.sys.country;
+	var description = weatherData.weather[0].description;
+	var temp = weatherData.main.temp;
+	var humidity = weatherData.main.humidity;
+	var clouds = weatherData.clouds.all;
+	
+	$('#weatherResponse').append("<br>The weather in <b>" + cityName + "</b> ,<b>" + country + "</b> is currently:<br><table style='width: 100%'><thead><tr><th>Weather</th><th>Measurement</th></tr></thead><tbody><tr><td>Temp</td><td>" + temp + " oC</td></tr><br><tr><td>Humidity</td><td>" + humidity + "</td></tr><br><tr><td>Description</td><td>" + description + "</td></tr><br><tr><td>Clouds</td><td>" + clouds +"%</td></tr><br>");
 	
 }
-//$( "#login").focusout(function(){
-//	validateElements();
-//});
 </script>
 
 </html>

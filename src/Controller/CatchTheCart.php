@@ -18,8 +18,13 @@ class CatchTheCart extends AbstractController
         $request = Request::createFromGlobals(); // the envelope, and were looking inside it.
 		
         // catch the variables we sent from the JavaScript.
-        $placedby = $request->request->get('placedby', 'this is the default');
-        $ser = $request->request->get('ser', 'this is the default');
+        $placedbyid = $request->request->get('placedbyId', '0');
+		$placedby = $request->request->get('placedby', 'this is the default');
+		$ser = $request->request->get('ser', 'this is the default');
+		$address = $request->request->get('address', 'this is the default');
+		$orderdate = $request->request->get('orderdate', 'this is the default');
+		$status = $request->request->get('status', 'this is the default');
+		$price = $request->request->get('price', 'this is the default');
         
         // to work the objects
         $entityManager = $this->getDoctrine()->getManager();
@@ -27,8 +32,13 @@ class CatchTheCart extends AbstractController
         // create blank entity of type "Orders"
         $order = new Orders();
         
+		$order->setPlacedbyId($placedbyid);
         $order->setPlacedBy($placedby);
-        $order->setDetails(substr($ser, 0, -1));
+        $order->setDetail(substr($ser, 0, -1));
+		$order->setAddress($address);
+		$order->setOrderdate($orderdate);
+		$order->setStatus($status);
+		$order->setPrice($price);
 		
 
         $entityManager->persist($order);
@@ -37,7 +47,7 @@ class CatchTheCart extends AbstractController
         $entityManager->flush();
 
         return new Response(
-				$ser
+			'all ok' . $ser
         ); 
     }
 }

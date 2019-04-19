@@ -1,7 +1,8 @@
 table, th, tr, td {
-	border: 1px dashed black;
+	border: 1px ridge black;
 }
 div#customer {
 	overflow: scroll;
 	flex: auto;
 }
+
