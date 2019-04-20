@@ -145,5 +145,107 @@ class viewAll extends AbstractController
 			);
         
 		}
+		if($type == 'viewCustomers'){
+			
+			$entityManager = $this->getDoctrine()->getManager();     
+
+			$placedbyId = $request->request->get('placedbyId', '0');
+     
+			$orders = $this->getDoctrine()->getRepository(Orders::class)->findBy(array('placedbyId' => $placedbyId));
+					
+			$output = '<table style="width: 100%"> 
+							<thead>
+								<tr>
+									<th>Order ID</th>
+									<th>Customer Name</th>
+									<th>Item&Quantity</th>
+									<th>Address</th>
+									<th>Price</th>
+									<th>Status</th>
+								</tr>	
+							</thead>';
+       
+			foreach($orders as $pro){
+           
+				$output .= '<tbody>
+							<tr>'; // one row
+				$output .= '<td>' . $pro->getId() . '</td>';
+				
+				$output .= '<td>' . $pro->getPlacedby() . '</td>'; // one column
+           
+				$output .= '<td>'; //next column
+				
+				$data = explode('=', $pro->getDetail()); // get the raw serialized order, breaking when we see the equals
+           
+				foreach($data as $record) {    // e.g., pizza-4 one record! 
+           
+					$item = explode('-',$record); // break it apart based on the dash.
+				
+				
+					if ($item[1] > 0) {
+						
+						$output .= $item[1]. '   ' . $item[0]. '   ';
+						
+					}
+				}
+				$output .= '</td>';
+           
+				$output .= '<td>' . $pro->getAddress() . '</td>'; // one column 
+		   
+				$output .= '<td>' . '€' . $pro->getPrice() . '</td>'; // one column
+		   
+				$output .= '<td>' . $pro->getStatus() . '</td>'; // one column
+		   
+				$output .= '</tr>';        
+
+		}
+
+		$output .= '</table>';
+			
+
+			return new Response(
+				$output
+			);
+        
+		}
+		if($type == 'updateDelivery'){
+			
+			$entityManager = $this->getDoctrine()->getManager(); 
+			
+			$orderid = $request->request->get('orderid', '0');
+     
+			$order = $this->getDoctrine()->getRepository(Orders::class)->findOneBy(array('id' => $orderid));
+			
+			if (!$order) {
+				throw $this->createNotFoundException('Unable to find this order.');
+			}
+
+			$order->setStatus('Delivered');
+			
+			$entityManager->persist($order);
+			
+			$entityManager->flush();
+			
+			return new Response(
+				"Order delivered"
+			);
+		}
+		if($type == 'total'){
+			
+			$entityManager = $this->getDoctrine()->getManager();     
+     
+			$orders = $this->getDoctrine()->getRepository(Orders::class)->findAll();
+			
+			$total = 0;
+			
+			foreach ($orders as $cost){
+			
+				$total = $total + $cost->getPrice();
+			}
+			return new Response(
+				$total
+			);
+		};
+		
 	}
 }

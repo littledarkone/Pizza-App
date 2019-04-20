@@ -73,10 +73,13 @@
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content">
-		<h2>Current Orders</h2>
-			<button id="viewOrders">View orders for deliver!</button>
-	
+		<h2>Orders for delivery</h2>
+			<!-- <button id="viewOrders">View orders for deliver!</button> -->
 			<div id="orders"></div>
+				<h3>Enter OrderID to update delivery status</h3>
+				<input type="text" name="orderid" id="orderid">
+				<button id="delivered">Delivered</button>
+		
 
 			<div id="weatherResponse"></div>
 			
@@ -97,8 +100,13 @@
 	
 	<div id="order"></div>
 	
+	<br>
+	
+	<div id="total"></div>
+	
 	
 	</div><!-- /content -->
+	<button onclick="logout()">Logout</button>
 </div><!-- END OF MANAGER PAGE -->
 
 
@@ -264,6 +272,7 @@
 	<div id="showOrder">
 		<h2> Your order details:</h2><br>
 			<div id="orderDetails"></div>
+			<span id="addressError"></span><br>
 			<br><label for="textarea-1" style="strong"><b>Customer Address: </b></label><textarea name="address" id="address"></textarea>
 			<input type="text" id="totalOrderPrice" size="15" readonly/>
 	</div>
@@ -274,6 +283,7 @@
     
     <button id="completeOrder" onclick="checkout()">Complete order </button>
 	
+	
 </div><!-- END OF CUSTOMER PAGE -->
 
 <div id="thanks">
@@ -282,6 +292,8 @@
 	<button id="placeAnother">Place another order?</button>
 	<button onclick="logout()">Logout</button>
 </div>
+<div id="previous"><h2>Here's your previous orders.</h2></div>
+<div id="custOrders"></div>
 </body>
 <!-- END OF BODY -->
 
@@ -290,6 +302,7 @@
 	$("#showOrder").hide();
 	$("#completeOrder").hide();
 	$("#thanks").hide();
+	
 	
 	//adding products and calculating total of each product - working
 	$('[id^=addProduct]' ).click(function() {
@@ -362,6 +375,8 @@
 	$( "#placeOrder" ).click(function() {
 
 		$("#orderOptions").hide(); // hide the order options
+		
+		$("#custOrders").hide();
 		
 		$("#showOrder").show();
 		
@@ -465,6 +480,7 @@
 				<!-- alert( "Data Loaded: " + data ); -->
 			});
 			});
+			
 		});
 		
 		console.log(placedbyId);
@@ -473,11 +489,13 @@
 		$("#showOrder").hide();
 		$("#goBack").hide();
 		$("#completeOrder").hide();
+		$("#previous").hide();
+		$("#custOrders").hide();
+		
 		$("#thanks").show();
 	}
 
 // call to view all pending orders - working
-$( "#viewOrders" ).click(function(){
 
 		var pend = "";
 		
@@ -490,8 +508,46 @@ $( "#viewOrders" ).click(function(){
 			orders = data;
 			
 			$("#orders").html(orders)
+	
+		});
+		
+// call to update order status
+$("#delivered").click(function(){
+
+	var orderid = $("#orderid").val();
+	
+	$.post( "/viewAll", {type: "updateDelivery", orderid: orderid})
+		.done(function(data){
+			
+			$("#viewOrders").show();
+			
+			alert(data);
+			
+			document.location.reload(true);
+		
+			});
+});
+	
+// call to view all customers orders - working
+
+		var placedbyId = 0;
+		
+		$.post( "/backend", { type: "getuserid"} )
+			.done(function( data ) {
+				placedbyId = data;
+		
+		$.post( "/viewAll", {type: "viewCustomers", placedbyId: placedbyId})
+		
+			.done(function( data ) {
+			
+			$("#viewCustOrders").hide();
+			
+			orders = data;
+			
+			$("#custOrders").html(orders)
 		});
 	});
+
 	
 // call to view all orders - working
 $( "#viewOrder" ).click(function(){
@@ -507,6 +563,15 @@ $( "#viewOrder" ).click(function(){
 			$("#order").html(orders)
 		});
 	});
+	
+		$.post( "/viewAll", {type: "total"})
+		
+			.done(function( data ) {
+			
+			total = data;
+			
+			$("#total").html("Total revenue for all orders is €" + total)
+		});
 	
 
 // go back to orderpage
